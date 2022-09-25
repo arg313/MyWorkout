@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyWorkout</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="forgotPassword">¿HAS OLVIDADO TU CONTRASEÑA?</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="signup">Regístrate</string>
+    <string name="nuevo_entrenamiento">Nuevo entrenamiento</string>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/base_cardview"
+        style="@style/Widget.Material3.CardView.Elevated"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_marginBottom="8dp"
+        android:layout_height="0dp">
+
+        <!-- This is a ConstraintLayout for the entire CardView including the expandable portion -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/workoutDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xx/xx/xxxx"
+                style="@style/TextAppearance.Material3.TitleMedium"/>
+
+            <TextView
+                android:id="@+id/durationNumEx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xh xxm | x ejercicios"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/exerciseList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="------, -------, -------, -------"
+                android:layout_marginBottom="8dp"/>
+
+            <Button
+                android:id="@+id/seeDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:text="Ver detalles"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
