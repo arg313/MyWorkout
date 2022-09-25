@@ -10,7 +10,6 @@ public class Exercise implements Parcelable {
 
     String name;
     ArrayList<Repetition> repetitions;
-    String exerciseId;
     Muscle muscle;
     int nextWorkout;
 
@@ -21,10 +20,9 @@ public class Exercise implements Parcelable {
         this.nextWorkout = 0;
     }
 
-    public Exercise (String name, ArrayList<Repetition> repetitions, String exerciseId, Muscle muscle, int nextWorkout) {
+    public Exercise (String name, ArrayList<Repetition> repetitions, Muscle muscle, int nextWorkout) {
         this.name = name;
         this.repetitions = repetitions;
-        this.exerciseId = exerciseId;
         this.muscle = muscle;
         this.nextWorkout = nextWorkout;
     }
@@ -33,7 +31,6 @@ public class Exercise implements Parcelable {
     protected Exercise(Parcel in) {
         name = in.readString();
         repetitions = in.createTypedArrayList(Repetition.CREATOR);
-        exerciseId = in.readString();
         muscle = in.readParcelable(Muscle.class.getClassLoader());
         nextWorkout = in.readInt();
     }
@@ -42,7 +39,6 @@ public class Exercise implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeTypedList(repetitions);
-        dest.writeString(exerciseId);
         dest.writeParcelable(muscle, flags);
         dest.writeInt(nextWorkout);
     }
@@ -80,14 +76,6 @@ public class Exercise implements Parcelable {
         this.repetitions = repetitions;
     }
 
-    public String getExerciseId() {
-        return exerciseId;
-    }
-
-    public void setExerciseId(String exerciseId) {
-        this.exerciseId = exerciseId;
-    }
-
     public Muscle getMuscle() {
         return muscle;
     }
@@ -113,7 +101,4 @@ public class Exercise implements Parcelable {
     public void addRepetition (Repetition repetition) {
         repetitions.add(repetition);
     }
-
-
-
 }

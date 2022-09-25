@@ -121,7 +121,7 @@ public class NewWorkoutActivity extends AppCompatActivity {
                 .setTitle("Cancelar entrenamiento")
                 .setMessage("Los datos introducidos para este entrenamiento no se guardarán. ¿Desea confirmar?")
                 .setPositiveButton("Confirmar", (dialogInterface, i) -> {
-                    goToMainActivity(view.getContext());
+                    goToMainActivity();
                 })
                 .setNegativeButton("Cancelar", (dialogInterface, i) -> {
                 })
@@ -131,32 +131,41 @@ public class NewWorkoutActivity extends AppCompatActivity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (actualWorkout.getExercises().isEmpty()) {
-                    new MaterialAlertDialogBuilder(NewWorkoutActivity.this)
-                            .setTitle("Terminar entrenamiento")
-                            .setMessage("Este entrenamiento no tiene datos, ¿Deseas salir?")
-                            .setPositiveButton("Confirmar", (dialogInterface, i) -> {
-                                goToMainActivity(view.getContext());
-                            })
-                            .setNegativeButton("Cancelar", (dialogInterface, i) -> {
-                            })
-                            .show();
-                } else {
-                    new MaterialAlertDialogBuilder(NewWorkoutActivity.this)
-                            .setTitle("Terminar entrenamiento")
-                            .setMessage("¿Deseas acabar el entrenamiento y guardar los datos?")
-                            .setPositiveButton("Confirmar", (dialogInterface, i) -> {
-                                saveWorkout(view.getContext());
-                            })
-                            .setNegativeButton("Cancelar", (dialogInterface, i) -> {
-                            })
-                            .show();
-                }
+                finishWorkout();
             }
         });
     }
 
-    public void saveWorkout(Context context) {
+    @Override
+    public void onBackPressed() {
+        finishWorkout();
+    }
+
+    public void finishWorkout() {
+        if (actualWorkout.getExercises().isEmpty()) {
+            new MaterialAlertDialogBuilder(NewWorkoutActivity.this)
+                    .setTitle("Terminar entrenamiento")
+                    .setMessage("Este entrenamiento no tiene datos, ¿Deseas salir?")
+                    .setPositiveButton("Confirmar", (dialogInterface, i) -> {
+                        goToMainActivity();
+                    })
+                    .setNegativeButton("Cancelar", (dialogInterface, i) -> {
+                    })
+                    .show();
+        } else {
+            new MaterialAlertDialogBuilder(NewWorkoutActivity.this)
+                    .setTitle("Terminar entrenamiento")
+                    .setMessage("¿Deseas acabar el entrenamiento y guardar los datos?")
+                    .setPositiveButton("Confirmar", (dialogInterface, i) -> {
+                        saveWorkout();
+                    })
+                    .setNegativeButton("Cancelar", (dialogInterface, i) -> {
+                    })
+                    .show();
+        }
+    }
+
+    public void saveWorkout() {
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
         Date date = new Date(System.currentTimeMillis());
@@ -166,36 +175,78 @@ public class NewWorkoutActivity extends AppCompatActivity {
         FirebaseUser user = localAuth.getCurrentUser();
         DocumentReference dr = store.collection("Trainings").document();
         Map<String, Object> trainingInfo = new HashMap<>();
+        Map<String, Object> exercises = new HashMap<>();
         trainingInfo.put("User", user.getEmail());
         trainingInfo.put("Start", actualWorkout.getStartDate());
         trainingInfo.put("Finish", finishDate);
-        dr.set(trainingInfo);
 
         for (int i = 0; i < actualWorkout.getExercises().size(); i++) {
             Exercise ex = actualWorkout.getExercises().get(i);
-            DocumentReference exerciseRef = store.collection("Exercises").document();
             Map<String, Object> exerciseInfo = new HashMap<>();
-            exerciseInfo.put("TrainingId", dr.getId());
-            exerciseInfo.put("Name", ex.getName());
+            Map<String, Object> repetitionsInfo = new HashMap<>();
             exerciseInfo.put("MuscleId", ex.getMuscle().getMuscleId());
             exerciseInfo.put("nextWorkout", ex.getNextWorkout()+"");
-            exerciseRef.set(exerciseInfo);
-
             for (int j = 0; j < ex.getRepetitions().size(); j++) {
-                DocumentReference repetitionRef = store.collection("Repetitions").document();
-                Map<String, Object> repetitionInfo = new HashMap<>();
-                repetitionInfo.put("ExerciseId", exerciseRef.getId());
-                repetitionInfo.put("Number", ex.getRepetitions().get(j).getRepNumber() + "");
-                repetitionInfo.put("Kilos", ex.getRepetitions().get(j).getKilos() + "");
-                repetitionRef.set(repetitionInfo);
+                repetitionsInfo.put("Number", ex.getRepetitions().get(j).getRepNumber() + "");
+                repetitionsInfo.put("Kilos", ex.getRepetitions().get(j).getKilos() + "");
+                repetitionsInfo.put("order", (j+1)+"");
             }
+            exerciseInfo.put("Repetitions", repetitionsInfo);
+            exercises.put(ex.getName(), exerciseInfo);
         }
+
+        trainingInfo.put("Exercises", exercises);
+        dr.set(trainingInfo);
         workouts.add(0, actualWorkout);
-        goToMainActivity(getApplicationContext());
+        goToMainActivity();
     }
 
-    public void goToMainActivity(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
+
+
+//    public void saveWorkout() {
+//
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+//        Date date = new Date(System.currentTimeMillis());
+//        String finishDate = formatter.format(date);
+//        actualWorkout.setFinishDate(finishDate);
+//
+//        FirebaseUser user = localAuth.getCurrentUser();
+//        DocumentReference dr = store.collection("Trainings").document();
+//        Map<String, Object> trainingInfo = new HashMap<>();
+//        trainingInfo.put("User", user.getEmail());
+//        trainingInfo.put("Start", actualWorkout.getStartDate());
+//        trainingInfo.put("Finish", finishDate);
+//        dr.set(trainingInfo);
+//
+//        for (int i = 0; i < actualWorkout.getExercises().size(); i++) {
+//            Exercise ex = actualWorkout.getExercises().get(i);
+//            DocumentReference exerciseRef = store.collection("Exercises").document();
+//            Map<String, Object> exerciseInfo = new HashMap<>();
+//            exerciseInfo.put("TrainingId", dr.getId());
+//            exerciseInfo.put("Name", ex.getName());
+//            exerciseInfo.put("MuscleId", ex.getMuscle().getMuscleId());
+//            exerciseInfo.put("nextWorkout", ex.getNextWorkout()+"");
+//            exerciseInfo.put("User", user.getEmail());
+//            exerciseRef.set(exerciseInfo);
+//
+//            for (int j = 0; j < ex.getRepetitions().size(); j++) {
+//                DocumentReference repetitionRef = store.collection("Repetitions").document();
+//                Map<String, Object> repetitionInfo = new HashMap<>();
+//                repetitionInfo.put("ExerciseId", exerciseRef.getId());
+//                repetitionInfo.put("Number", ex.getRepetitions().get(j).getRepNumber() + "");
+//                repetitionInfo.put("Kilos", ex.getRepetitions().get(j).getKilos() + "");
+//                repetitionInfo.put("order", (j+1)+"");
+//                repetitionInfo.put("User", user.getEmail());
+//                repetitionInfo.put("TrainingId", dr.getId());
+//                repetitionRef.set(repetitionInfo);
+//            }
+//        }
+//        workouts.add(0, actualWorkout);
+//        goToMainActivity();
+//    }
+
+    public void goToMainActivity() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         //Se usan workouts y muscleGroups
         putExtras(intent);
         startActivity(intent);

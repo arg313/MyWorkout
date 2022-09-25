@@ -9,8 +9,8 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/gradient_background">
+        android:background="@drawable/gradient_background"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -20,10 +20,10 @@
                 android:id="@+id/toolbarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#00000000"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="#00000000">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/toolbar"
@@ -36,38 +36,6 @@
                     app:titleCentered="true"
                     app:titleTextColor="?attr/colorOnPrimary" />
             </com.google.android.material.appbar.AppBarLayout>
-
-<!--            <RelativeLayout-->
-<!--                android:id="@+id/loadLy"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
-
-<!--                <ProgressBar-->
-<!--                    android:id="@+id/homeProgressBar"-->
-<!--                    style="?android:attr/progressBarStyleLarge"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="24dp"-->
-<!--                    android:visibility="visible"-->
-<!--                    tools:ignore="MissingConstraints"-->
-<!--                    android:layout_centerInParent="true"/>-->
-<!--            </RelativeLayout>-->
-
-
-<!--            <RelativeLayout-->
-<!--                android:id="@+id/emptyLy"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
-
-<!--                <TextView-->
-<!--                    style="@style/TextAppearance.Material3.TitleMedium"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerInParent="true"-->
-<!--                    android:text="Todavía no has guardado ningún entrenamiento\nComienza pulsando el botón '+'"-->
-<!--                    android:textAlignment="center" />-->
-
-<!--            </RelativeLayout>-->
 
             <ScrollView
                 android:id="@+id/horizontalScrollView"
@@ -90,34 +58,34 @@
                         android:id="@+id/helloText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
                         android:text="Hola,"
-                        android:textStyle="bold"
                         android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                        android:textColor="?attr/colorOnPrimary" />
+                        android:textColor="?attr/colorOnPrimary"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/beginWorkoutBt"
+                        style="@style/Widget.Material3.Button.ElevatedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.Material3.Button.ElevatedButton"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="32dp"
-                        android:layout_marginEnd="32dp"
                         android:layout_marginStart="32dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="32dp"
                         android:padding="16dp"
-                        android:text="Empezar un entrenamiento"/>
+                        android:text="Empezar un entrenamiento" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/base_cardview"
                         style="@style/Widget.Material3.CardView.Elevated"
                         android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="8dp"
+                        android:layout_height="0dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:layout_height="0dp">
+                        android:layout_marginBottom="8dp"
+                        android:layout_weight="1">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -127,57 +95,40 @@
 
                             <TextView
                                 android:id="@+id/workoutDate"
+                                style="@style/TextAppearance.Material3.TitleMedium"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Mis entrenamientos"
-                                android:drawableStart="@drawable/ic_fitness"
-                                android:drawablePadding="8dp"
                                 android:layout_marginBottom="8dp"
-                                style="@style/TextAppearance.Material3.TitleMedium"/>
+                                android:drawablePadding="8dp"
+                                android:text="Mis entrenamientos"
+                                app:drawableStartCompat="@drawable/ic_fitness" />
 
                             <TextView
-                                android:id="@+id/durationNumEx"
+                                android:id="@+id/lastWorkoutText"
+                                style="@style/TextAppearance.Material3.BodyMedium"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Último: xh xxm | x ejercicios"
-                                style="@style/TextAppearance.Material3.BodyMedium"
-                                android:layout_marginBottom="16dp"/>
+                                android:layout_marginBottom="16dp"
+                                android:text="Último:" />
 
                             <TextView
                                 android:id="@+id/exerciseList"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="------, -------, -------, -------"
-                                android:layout_marginBottom="8dp"/>
+                                android:layout_marginBottom="8dp"
+                                android:text="" />
 
                             <Button
                                 android:id="@+id/seeDetails"
+                                style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                style="@style/Widget.Material3.Button.OutlinedButton"
-                                android:text="Ver más"/>
+                                android:text="Ver más" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
-
-<!--                    <androidx.fragment.app.FragmentContainerView-->
-<!--                        android:id="@+id/workoutsDone"-->
-<!--                        android:name="com.rocasoftware.myworkout.WorkoutFragment"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content" />-->
                 </LinearLayout>
             </ScrollView>
         </RelativeLayout>
-
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/newWorkoutBt"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="bottom|end"-->
-<!--            android:layout_margin="16dp"-->
-<!--            android:contentDescription="@string/nuevo_entrenamiento"-->
-<!--            app:srcCompat="@drawable/ic_add"-->
-<!--            style="@style/Widget.Material3.FloatingActionButton.Large.Surface"/>-->
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

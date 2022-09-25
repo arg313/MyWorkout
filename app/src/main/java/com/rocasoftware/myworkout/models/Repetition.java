@@ -7,30 +7,26 @@ public class Repetition implements Parcelable {
 
     int repNumber;
     int kilos;
-    String repetitionId;
-    String exerciseId;
+    int order;
 
-    public Repetition(int repNumber, int kilos, String repetitionId, String exerciseId) {
+    public Repetition(int repNumber, int kilos, int order) {
         this.repNumber = repNumber;
         this.kilos = kilos;
-        this.repetitionId = repetitionId;
-        this.exerciseId = exerciseId;
+        this.order = order;
     }
 
 
     protected Repetition(Parcel in) {
         repNumber = in.readInt();
         kilos = in.readInt();
-        repetitionId = in.readString();
-        exerciseId = in.readString();
+        order = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(repNumber);
         dest.writeInt(kilos);
-        dest.writeString(repetitionId);
-        dest.writeString(exerciseId);
+        dest.writeInt(order);
     }
 
     @Override
@@ -66,21 +62,11 @@ public class Repetition implements Parcelable {
         this.kilos = kilos;
     }
 
-    public String getRepetitionId() {
-        return repetitionId;
+    public int getOrder() {
+        return order;
     }
 
-    public void setRepetitionId(String repetitionId) {
-        this.repetitionId = repetitionId;
+    public void setOrder(int order) {
+        this.order = order;
     }
-
-    public String getExerciseId() {
-        return exerciseId;
-    }
-
-    public void setExerciseId(String exerciseId) {
-        this.exerciseId = exerciseId;
-    }
-
-
 }

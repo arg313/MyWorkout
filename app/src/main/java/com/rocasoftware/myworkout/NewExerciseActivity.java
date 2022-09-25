@@ -169,7 +169,7 @@ public class NewExerciseActivity extends AppCompatActivity {
 
         addRepBt = findViewById(R.id.addRep);
         addRepBt.setOnClickListener(view -> {
-            Repetition rep = new Repetition(0, 0, "0", "0");
+            Repetition rep = new Repetition(0, 0,  actualExercise.getRepetitions().size()+1);
             actualExercise.getRepetitions().add(rep);
             exerciseRepFragment = ExerciseRepFragment.newInstance(1, actualExercise.getRepetitions());
             getSupportFragmentManager().beginTransaction().replace(R.id.exerciseDone, exerciseRepFragment).commit();
